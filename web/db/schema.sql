@@ -18,7 +18,7 @@ CREATE TABLE complaints (
                             status ENUM('Pending', 'In Progress', 'Resolved') DEFAULT 'Pending',
                             remarks TEXT,
                             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                            FOREIGN KEY (user_id) REFERENCES users(username) ON DELETE CASCADE
+                            FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
 -- Insert sample data

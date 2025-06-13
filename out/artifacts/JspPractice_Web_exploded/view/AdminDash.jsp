@@ -12,5 +12,9 @@
 </head>
 <body>
 <h1>Admin Dashboard</h1>
+
+
+<h1>Welcome Admin: <%= session.getAttribute("username") %></h1>
+
 </body>
 </html>

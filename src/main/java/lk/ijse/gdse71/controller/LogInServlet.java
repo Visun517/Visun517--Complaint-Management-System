@@ -6,6 +6,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import lk.ijse.gdse71.model.User;
 import lk.ijse.gdse71.model.dao.UserDao;
 
@@ -19,8 +20,6 @@ public class LogInServlet extends HttpServlet {
 
     @Resource(name = "java:comp/env/jdbc/pool")
     private DataSource dataSource;
-
-
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -37,17 +36,20 @@ public class LogInServlet extends HttpServlet {
         try {
             ResultSet resultSet = userDao.loginUser(user, dataSource);
 
-//            while (resultSet.next()) {
-//                System.out.println(resultSet.getString("username"));
-//                System.out.println(resultSet.getString("role"));
-//            }
-
             if (resultSet.next()) {
                 String role = resultSet.getString("role");
+
+                HttpSession httpSession = request.getSession();
+                httpSession.setAttribute("username", username);
+                httpSession.setAttribute("role", role);
+                httpSession.setAttribute("id", resultSet.getString("id"));
+
+
                 if (role.equals("admin")) {
                     response.sendRedirect(contextPath + "/view/AdminDash.jsp");
                 } else if (role.equals("employee")) {
-                    response.sendRedirect(contextPath +"/view/EmployeeDash.jsp");
+//                    response.sendRedirect(contextPath +"/view/ComplaintDash.jsp");
+                    response.sendRedirect(request.getContextPath() + "/ComplaintsDashBoardServlet");
                 }
             } else {
                 response.sendRedirect(contextPath +"/view/LogIn.jsp");
