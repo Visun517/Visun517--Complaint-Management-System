@@ -11,7 +11,6 @@ import lk.ijse.gdse71.model.dao.UserDao;
 
 import javax.sql.DataSource;
 import java.io.IOException;
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.UUID;
 
@@ -23,6 +22,9 @@ public class SignUpServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        String contextPath = req.getContextPath();
+
         String username = req.getParameter("username");
         String password = req.getParameter("password");
         String role = req.getParameter("role");
@@ -41,12 +43,11 @@ public class SignUpServlet extends HttpServlet {
         try {
             int i = userDao.saveUser(user, dataSource);
             if (i>0){
-                resp.sendRedirect("LogIn.jsp");
+                resp.sendRedirect(contextPath + "/view/LogIn.jsp");
             }
-
         } catch (SQLException e) {
             req.setAttribute("error", "Invalid username, password, or role");
-            req.getRequestDispatcher("LogIn.jsp").forward(req, resp);
+            req.getRequestDispatcher(contextPath + "/view/LogIn.jsp").forward(req, resp);
             throw new RuntimeException(e);
         }
 

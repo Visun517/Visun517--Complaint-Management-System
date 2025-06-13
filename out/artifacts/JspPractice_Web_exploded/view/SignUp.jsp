@@ -4,7 +4,7 @@
 <head>
     <title>Sign Up - CMS</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link href="css/SingUp.css" rel="stylesheet">
+    <link href="../css/SingUp.css" rel="stylesheet">
 </head>
 <body>
 <div class="signup-container">
@@ -37,16 +37,7 @@
     <% } %>
 </div>
 
-<script>
-    function showSelectedRole() {
-        var dropdown = document.getElementById("roleDropdown");
-        var selectedRole = dropdown.value;
-        var label = document.getElementById("selectedRole");
-        label.textContent = selectedRole ? "Selected Role: " + selectedRole : "";
-        document.getElementById("hiddenRole").value = selectedRole;
-    }
-</script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-<script src="js/SignUp.js"></script>
+<script src="../js/SignUp.js"></script>
 </body>
 </html>

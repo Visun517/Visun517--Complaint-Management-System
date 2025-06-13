@@ -5,8 +5,8 @@ import lk.ijse.gdse71.model.User;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.UUID;
 
 public class UserDao {
 
@@ -19,5 +19,14 @@ public class UserDao {
         preparedStatement.setString(4, user.getRole());
         int i = preparedStatement.executeUpdate();
         return i;
+    }
+
+    public ResultSet loginUser(User user , DataSource dataSource) throws SQLException {
+        Connection connection = dataSource.getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM users WHERE username = ? AND password = ?");
+        preparedStatement.setString(1,user.getUserName());
+        preparedStatement.setString(2, user.getPassword());
+        ResultSet resultSet = preparedStatement.executeQuery();
+        return resultSet;
     }
 }
