@@ -6,6 +6,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import lk.ijse.gdse71.model.Complains;
 import lk.ijse.gdse71.model.dao.ComplainsDao;
 
@@ -21,9 +22,18 @@ public class AdminDashServlet extends HttpServlet {
 
     @Resource(name = "java:comp/env/jdbc/pool")
     private DataSource dataSource;
-
+    String userId = "";
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        String contextPath = req.getContextPath();
+
+        HttpSession session1 = req.getSession(false);
+        if (session1 == null || session1.getAttribute("id") == null) {
+            resp.sendRedirect(contextPath + "/view/LogIn.jsp");
+            return;
+        }
+        userId = (String) session1.getAttribute("id");
 
         ComplainsDao complainsDao = new ComplainsDao();
         try {
@@ -48,5 +58,50 @@ public class AdminDashServlet extends HttpServlet {
             throw new RuntimeException(e);
         }
 
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        if (req.getParameter("action").equals("update")) {
+            System.out.println("update");
+            String status = req.getParameter("status");
+            String remarks = req.getParameter("remark");
+            String complainId = req.getParameter("complain-id");
+            String creatAt = req.getParameter("createAt");
+            String description = req.getParameter("description");
+
+            Complains complains = new Complains();
+            complains.setStatus(status);
+            complains.setRemarks(remarks);
+            complains.setUserId(userId);
+            complains.setComplainId(complainId);
+            complains.setDescription(description);
+
+            ComplainsDao complainsDao = new ComplainsDao();
+            try {
+                int i = complainsDao.updateComplains(complains, dataSource);
+                if (i > 0) {
+                    System.out.println("Update success");
+                    resp.sendRedirect("AdminDashServlet");
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+
+        } else if (req.getParameter("action").equals("delete")) {
+            System.out.println(req.getParameter("complaintId"));
+
+            ComplainsDao complainsDao = new ComplainsDao();
+            try {
+                int i = complainsDao.deleteComplains(req.getParameter("complaintId"), dataSource);
+                if (i > 0) {
+                    System.out.println("Delete success");
+                    resp.sendRedirect("AdminDashServlet");
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 }

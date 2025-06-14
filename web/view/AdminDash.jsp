@@ -28,8 +28,11 @@
 
 <form method="POST" action="AdminDashServlet">
 
+    <label for="complain-id">Complain-id</label>
+    <input type="text" id="complain-id" name="complain-id">
+
     <label for="statusDropDown">Choose status</label>
-    <select class="form-select" id="statusDropDown" name="role" required>
+    <select class="form-select" id="statusDropDown" name="status" required>
         <option value="" disabled selected>Select status</option>
         <option value="Pending">Pending</option>
         <option value="In Progress">In Progress</option>
@@ -39,8 +42,11 @@
     <label for="remark">Remarks</label>
     <input type="text" id="remark" name="remark">
 
+    <input type="hidden" id="description" name="description" >
+
+    <input type="hidden" id="createAt" name="createAt">
+
     <button type="submit" name="action" value="update">Update</button>
-    <button type="submit" name="action" value="delete">Delete</button>
 </form>
 
 
@@ -54,19 +60,26 @@
                 <th>Status</th>
                 <th>Remarks</th>
                 <th>Created At</th>
+                <th>Action</th>
             </tr>
             </thead>
-                <tbody id="complain-tbody">
+                <tbody id="complain-tbody-admin">
                 <%
                     if (complaintsList != null && !complaintsList.isEmpty()) {
                         for (Complains c : complaintsList) {
                 %>
                 <tr>
-                    <td><%= c.getComplainId() %></td>
-                    <td><%= c.getDescription() %></td>
-                    <td><%= c.getStatus() %></td>
-                    <td><%= c.getRemarks() %></td>
-                    <td><%= c.getCreatedDate() %></td>
+                    <form method="POST" action="AdminDashServlet">
+                        <td><%= c.getComplainId() %></td>
+                        <td><%= c.getDescription() %></td>
+                        <td><%= c.getStatus() %></td>
+                        <td><%= c.getRemarks() %></td>
+                        <td><%= c.getCreatedDate() %></td>
+
+                        <input type="hidden" name="complaintId" value="<%= c.getComplainId() %>">
+
+                        <td><button type="submit" name="action" value="delete">Delete</button></td>
+                    </form>
                 </tr>
                 <%
                     }
@@ -80,6 +93,7 @@
                 %>
                 </tbody>
     </table>
-
+<script src="${pageContext.request.contextPath}/lib/jquery-3.7.1.min.js"></script>
+<script src="${pageContext.request.contextPath}/js/AdminDash.js"></script>
 </body>
 </html>
