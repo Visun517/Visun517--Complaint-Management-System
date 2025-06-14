@@ -50,4 +50,11 @@ public class ComplainsDao {
         int i = preparedStatement.executeUpdate();
         return i;
     }
+
+    public ResultSet getAllComplainsAdmin(DataSource dataSource) throws SQLException {
+        Connection connection = dataSource.getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(" select * from complaints");
+        ResultSet resultSet = preparedStatement.executeQuery();
+        return resultSet;
+    }
 }
