@@ -40,7 +40,6 @@ public class ComplaintsDashBoardServlet extends HttpServlet {
         ComplainsDao complainsDao = new ComplainsDao();
         try {
             ResultSet allComplains = complainsDao.getAllComplains(userId, dataSource);
-
             List<Complains> complainsList = new ArrayList<>();
 
             while (allComplains.next()) {
@@ -54,10 +53,26 @@ public class ComplaintsDashBoardServlet extends HttpServlet {
                 complainsList.add(complains);
             }
 
+            ResultSet allComplainsAdmin = complainsDao.getAllComplainsAdmin(dataSource);
+            List<Complains> complainsList1 = new ArrayList<>();
+
+            while (allComplainsAdmin.next()) {
+                Complains complains = new Complains();
+                complains.setComplainId(allComplainsAdmin.getString("id"));
+                complains.setUserId(allComplainsAdmin.getString("user_id"));
+                complains.setDescription(allComplainsAdmin.getString("description"));
+                complains.setStatus(allComplainsAdmin.getString("status"));
+                complains.setRemarks(allComplainsAdmin.getString("remarks"));
+                complains.setCreatedDate(allComplainsAdmin.getTimestamp("created_at"));
+                complainsList1.add(complains);
+            }
+
             req.setAttribute("complainsList", complainsList);
+            req.setAttribute("complainsList1", complainsList1);
             req.getRequestDispatcher("/view/ComplaintDash.jsp").forward(req, resp);
 
         } catch (Exception e) {
+            e.printStackTrace();
             throw new RuntimeException(e);
         }
 
@@ -69,7 +84,6 @@ public class ComplaintsDashBoardServlet extends HttpServlet {
         String description = req.getParameter("description");
         String status = req.getParameter("status");
         String remark = req.getParameter("remark");
-        System.out.println(description);
         //String creatAt = req.getParameter("creatAt");
 
         ComplainsDao complainsDao = new ComplainsDao();
@@ -85,14 +99,22 @@ public class ComplaintsDashBoardServlet extends HttpServlet {
             complains.setRemarks(remark);
 
             try {
-                int i = complainsDao.updateComplains(complains, dataSource);
+                if (!isResolved(id)) {
+                    int i = complainsDao.updateComplains(complains, dataSource);
 
-                if (i > 0) {
-                    System.out.println("Update success");
+                    if (i > 0) {
+                        System.out.println("Update success");
+                        resp.sendRedirect("ComplaintsDashBoardServlet");
+                    }
+                }else {
+                    System.out.println("You can't delete this complain");
                     resp.sendRedirect("ComplaintsDashBoardServlet");
                 }
+
             } catch (SQLException e) {
                 e.printStackTrace();
+                throw new RuntimeException(e);
+            } catch (Exception e) {
                 throw new RuntimeException(e);
             }
 
@@ -100,13 +122,20 @@ public class ComplaintsDashBoardServlet extends HttpServlet {
             System.out.println("delete");
 
             try {
-                int i = complainsDao.deleteComplains(id, dataSource);
+                if (!isResolved(id)) {
+                    int i = complainsDao.deleteComplains(id, dataSource);
 
-                if (i > 0) {
-                    System.out.println("Delete success");
+                    if (i > 0) {
+                        System.out.println("Delete success");
+                        resp.sendRedirect("ComplaintsDashBoardServlet");
+                    }
+                }else {
+                    System.out.println("You can't delete this complain");
                     resp.sendRedirect("ComplaintsDashBoardServlet");
                 }
             } catch (SQLException e) {
+                throw new RuntimeException(e);
+            } catch (Exception e) {
                 throw new RuntimeException(e);
             }
 
@@ -130,4 +159,16 @@ public class ComplaintsDashBoardServlet extends HttpServlet {
 
         }
     }
+
+    public boolean isResolved(String id) throws Exception {
+        ComplainsDao complainsDao = new ComplainsDao();
+        ResultSet resolved = complainsDao.isResolved(id, dataSource);
+
+        if (resolved.next()) {
+            return !resolved.getString("status").equals("Resolved");
+        } else {
+            throw new Exception("No complaint found with the given ID: " + id);
+        }
+    }
+
 }

@@ -1,13 +1,14 @@
 <%@ page import="java.util.List" %>
 <%@ page import="lk.ijse.gdse71.model.Complains" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
 <%
     String nextId = "C001";
 
-    List<Complains> complaintsList = (List<Complains>) request.getAttribute("complainsList");
+    List<Complains> complaintsList1 = (List<Complains>) request.getAttribute("complainsList1");
 
-    if (complaintsList != null && !complaintsList.isEmpty()) {
-        Complains lastComplaint = complaintsList.get(complaintsList.size() - 1);
+    if (complaintsList1 != null && !complaintsList1.isEmpty()) {
+        Complains lastComplaint = complaintsList1.get(complaintsList1.size() - 1);
         String lastId = lastComplaint.getComplainId();
 
         String numberPart = lastId.substring(1);
@@ -60,6 +61,13 @@
         <th>Created At</th>
     </tr>
     </thead>
+    <%
+        List<Complains> complaintsList = (List<Complains>) request.getAttribute("complainsList");
+
+        if (complaintsList != null && !complaintsList.isEmpty()) {
+
+        }
+    %>
     <tbody id="complain-tbody">
     <%
         if (complaintsList != null && !complaintsList.isEmpty()) {

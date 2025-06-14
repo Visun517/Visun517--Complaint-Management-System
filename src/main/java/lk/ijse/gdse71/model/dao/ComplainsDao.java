@@ -57,4 +57,11 @@ public class ComplainsDao {
         ResultSet resultSet = preparedStatement.executeQuery();
         return resultSet;
     }
+
+    public ResultSet isResolved(String id, DataSource dataSource) throws SQLException {
+        Connection connection = dataSource. getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement("SELECT status FROM complaints WHERE id = 'C010';");
+        ResultSet resultSet = preparedStatement.executeQuery();
+        return resultSet;
+    }
 }
