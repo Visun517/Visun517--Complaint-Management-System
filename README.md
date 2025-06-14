@@ -34,9 +34,9 @@ The system consists of three main roles:
 
 ## 🛠️ Technologies Used
 
-- **Frontend:** HTML, CSS, JSP
-- **Backend:** Java Servlets, JDBC
-- **Database:** MySQL
+- **Frontend:**JSP, HTML, CSS, JavaScript 
+- **Backend:** Jakarta EE (Servlets), Apache Commons DBCP
+- **Database:** MySQL, accessed via DBCP connection pooling
 - **Server:** Apache Tomcat (v11.0.7)
 - **Connection Pooling:** Apache Commons DBCP via `context.xml`
 
