@@ -68,11 +68,30 @@ public class ComplaintsDashBoardServlet extends HttpServlet {
         String id = req.getParameter("complaintId");
         String description = req.getParameter("description");
         String status = req.getParameter("status");
+        String remark = req.getParameter("remark");
+        //String creatAt = req.getParameter("creatAt");
 
         ComplainsDao complainsDao = new ComplainsDao();
 
         if (req.getParameter("action").equals("update")) {
             System.out.println("update");
+
+            Complains complains = new Complains();
+            complains.setComplainId(id);
+            complains.setDescription(description);
+            complains.setStatus(status);
+            complains.setUserId(userId);
+            complains.setRemarks(remark);
+
+            try {
+                int i = complainsDao.updateComplains(complains, dataSource);
+
+                if (i > 0) {
+                    System.out.println("Update success");
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
 
         } else if (req.getParameter("action").equals("delete")) {
             System.out.println("delete");

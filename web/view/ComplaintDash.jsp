@@ -36,9 +36,9 @@
     <label for="description">Description</label>
     <input type="text" id="description" name="description" required>
 
-    <input type="hidden" id="remark" name="description" required>
+    <input type="hidden" id="remark" name="remark" required>
 
-    <input type="hidden" id="creatAt" name="description" required>
+    <input type="hidden" id="creatAt" name="creatAt" required>
 
     <button type="submit">Save</button>
 
