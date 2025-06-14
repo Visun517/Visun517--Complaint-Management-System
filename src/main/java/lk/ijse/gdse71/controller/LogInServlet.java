@@ -48,7 +48,6 @@ public class LogInServlet extends HttpServlet {
                 if (role.equals("admin")) {
                     response.sendRedirect(contextPath + "/view/AdminDash.jsp");
                 } else if (role.equals("employee")) {
-//                    response.sendRedirect(contextPath +"/view/ComplaintDash.jsp");
                     response.sendRedirect(request.getContextPath() + "/ComplaintsDashBoardServlet");
                 }
             } else {

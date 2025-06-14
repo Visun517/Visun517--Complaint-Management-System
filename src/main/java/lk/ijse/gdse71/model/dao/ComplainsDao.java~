@@ -20,12 +20,13 @@ public class ComplainsDao {
 
     public int saveComplains(Complains complains , DataSource dataSource) throws Exception {
         Connection connection = dataSource.getConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO complaints (id, user_id, description, status, remarks) VALUES (?, ?, ?, ?, ?)");
+        PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO complaints (id, user_id, description, status, remarks, created_at) VALUES (?, ?, ?, ?, ?, ?)");
         preparedStatement.setString(1, complains.getComplainId());
         preparedStatement.setString(2, complains.getUserId());
         preparedStatement.setString(3, complains.getDescription());
         preparedStatement.setString(4, complains.getStatus());
         preparedStatement.setString(5, complains.getRemarks());
+        preparedStatement.setTimestamp(6, complains.getCreatedDate());
         int i = preparedStatement.executeUpdate();
         return i;
     }

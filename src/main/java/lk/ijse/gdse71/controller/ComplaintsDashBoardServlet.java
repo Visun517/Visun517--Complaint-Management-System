@@ -22,6 +22,8 @@ public class ComplaintsDashBoardServlet extends HttpServlet {
     @Resource(name = "java:comp/env/jdbc/pool")
     private DataSource dataSource;
 
+    String userId = "";
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
@@ -32,7 +34,7 @@ public class ComplaintsDashBoardServlet extends HttpServlet {
             resp.sendRedirect(contextPath + "/view/LogIn.jsp");
             return;
         }
-        String userId = (String) session1.getAttribute("id");
+        userId = (String) session1.getAttribute("id");
 
         ComplainsDao complainsDao = new ComplainsDao();
         try {
@@ -62,6 +64,24 @@ public class ComplaintsDashBoardServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println("ComplaintsDashBoardServlet");
+        String id = req.getParameter("complaintId");
+        String description = req.getParameter("description");
+        String status = req.getParameter("status");
+
+        Complains complains = new Complains();
+        complains.setComplainId(id);
+        complains.setDescription(description);
+        complains.setStatus(status);
+        complains.setUserId(userId);
+
+        ComplainsDao complainsDao = new ComplainsDao();
+        try {
+            int i = complainsDao.saveComplains(complains, dataSource);
+            if (i > 0) {
+                System.out.println("success");
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }
