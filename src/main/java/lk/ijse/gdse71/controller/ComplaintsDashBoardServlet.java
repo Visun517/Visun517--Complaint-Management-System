@@ -69,6 +69,7 @@ public class ComplaintsDashBoardServlet extends HttpServlet {
         String description = req.getParameter("description");
         String status = req.getParameter("status");
         String remark = req.getParameter("remark");
+        System.out.println(description);
         //String creatAt = req.getParameter("creatAt");
 
         ComplainsDao complainsDao = new ComplainsDao();
@@ -88,8 +89,10 @@ public class ComplaintsDashBoardServlet extends HttpServlet {
 
                 if (i > 0) {
                     System.out.println("Update success");
+                    resp.sendRedirect("ComplaintsDashBoardServlet");
                 }
             } catch (SQLException e) {
+                e.printStackTrace();
                 throw new RuntimeException(e);
             }
 
@@ -101,22 +104,25 @@ public class ComplaintsDashBoardServlet extends HttpServlet {
 
                 if (i > 0) {
                     System.out.println("Delete success");
+                    resp.sendRedirect("ComplaintsDashBoardServlet");
                 }
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
 
-        } else {
+        } else if (req.getParameter("action").equals("save")) {
             Complains complains = new Complains();
             complains.setComplainId(id);
             complains.setDescription(description);
             complains.setStatus(status);
             complains.setUserId(userId);
+            complains.setRemarks(remark);
 
             try {
                 int i = complainsDao.saveComplains(complains, dataSource);
                 if (i > 0) {
                     System.out.println("Save success");
+                    resp.sendRedirect("ComplaintsDashBoardServlet");
                 }
             } catch (Exception e) {
                 throw new RuntimeException(e);

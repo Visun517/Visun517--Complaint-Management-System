@@ -5,6 +5,7 @@ $('#complain-tbody').on('click', 'tr', function () {
     let status = clickedItemIndex.find('td').eq(2).text();
     let remarks = clickedItemIndex.find('td').eq(3).text();
     let createdDate = clickedItemIndex.find('td').eq(4).text();
+    console.log(description)
 
     $('#complaintId').val(id);
     $('#status').val(status);
