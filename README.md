@@ -86,7 +86,7 @@ This project uses **Apache DBCP connection pooling** via `context.xml`. Add the 
     driverClassName="com.mysql.cj.jdbc.Driver"
     url="jdbc:mysql://localhost:3306/assignment_cms"
     username="root"
-    password="Ijse@1234"
+    password="....1234"
     maxTotal="100"
     maxIdle="50"
     factory="org.apache.commons.dbcp2.BasicDataSourceFactory"
