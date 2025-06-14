@@ -36,9 +36,23 @@
     <label for="description">Description</label>
     <input type="text" id="description" name="description" required>
 
+    <input type="hidden" id="remark" name="description" required>
+
+    <input type="hidden" id="creatAt" name="description" required>
+
     <button type="submit">Save</button>
-    <button type="button">Delete</button>
-    <button type="button">Update</button>
+
+    <form method="POST" action="ComplaintsDashBoardServlet">
+        <input type="hidden" name="action" value="update">
+        <input type="hidden" name="complaintId" id="updateId">
+        <button type="submit">Update</button>
+    </form>
+
+    <form method="POST" action="ComplaintsDashBoardServlet">
+        <input type="hidden" name="action" value="delete">
+        <input type="hidden" name="complaintId" id="deleteId" >
+        <button type="submit">Delete</button>
+    </form>
 </form>
 
 <br>
@@ -53,7 +67,7 @@
         <th>Created At</th>
     </tr>
     </thead>
-    <tbody>
+    <tbody id="complain-tbody">
     <%
         if (complaintsList != null && !complaintsList.isEmpty()) {
             for (Complains c : complaintsList) {
@@ -77,6 +91,7 @@
     %>
     </tbody>
 </table>
-
+<script src="${pageContext.request.contextPath}/lib/jquery-3.7.1.min.js"></script>
+<script src="${pageContext.request.contextPath}/js/ComplaintsDash.js"></script>
 </body>
 </html>

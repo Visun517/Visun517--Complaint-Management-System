@@ -6,6 +6,7 @@ import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class ComplainsDao {
 
@@ -26,6 +27,15 @@ public class ComplainsDao {
         preparedStatement.setString(3, complains.getDescription());
         preparedStatement.setString(4, complains.getStatus());
         preparedStatement.setString(5, complains.getRemarks());
+        int i = preparedStatement.executeUpdate();
+        return i;
+    }
+
+    public int deleteComplains(String id, DataSource dataSource) throws SQLException {
+        Connection connection = dataSource.getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM complaints WHERE id = ?");
+        preparedStatement.setString(1,id);
+
         int i = preparedStatement.executeUpdate();
         return i;
     }

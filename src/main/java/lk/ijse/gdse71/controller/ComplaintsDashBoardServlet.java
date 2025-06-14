@@ -13,6 +13,7 @@ import lk.ijse.gdse71.model.dao.ComplainsDao;
 import javax.sql.DataSource;
 import java.io.IOException;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -68,20 +69,40 @@ public class ComplaintsDashBoardServlet extends HttpServlet {
         String description = req.getParameter("description");
         String status = req.getParameter("status");
 
-        Complains complains = new Complains();
-        complains.setComplainId(id);
-        complains.setDescription(description);
-        complains.setStatus(status);
-        complains.setUserId(userId);
-
         ComplainsDao complainsDao = new ComplainsDao();
-        try {
-            int i = complainsDao.saveComplains(complains, dataSource);
-            if (i > 0) {
-                System.out.println("success");
+
+        if (req.getParameter("action").equals("update")) {
+            System.out.println("update");
+
+        } else if (req.getParameter("action").equals("delete")) {
+            System.out.println("delete");
+
+            try {
+                int i = complainsDao.deleteComplains(id, dataSource);
+
+                if (i > 0) {
+                    System.out.println("Delete success");
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
             }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+
+        } else {
+            Complains complains = new Complains();
+            complains.setComplainId(id);
+            complains.setDescription(description);
+            complains.setStatus(status);
+            complains.setUserId(userId);
+
+            try {
+                int i = complainsDao.saveComplains(complains, dataSource);
+                if (i > 0) {
+                    System.out.println("Save success");
+                }
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+
         }
     }
 }
