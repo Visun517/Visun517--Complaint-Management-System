@@ -11,7 +11,6 @@ import java.sql.SQLException;
 public class ComplainsDao {
 
     public ResultSet getAllComplains(String userId, DataSource dataSource) throws Exception {
-
         Connection connection = dataSource.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM complaints WHERE user_id = ?");
         preparedStatement.setString(1, userId);

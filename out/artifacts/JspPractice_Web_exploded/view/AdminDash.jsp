@@ -11,10 +11,44 @@
     <title>Admin Dashboard</title>
 </head>
 <body>
-<h1>Admin Dashboard</h1>
+
+<h2 style="text-align: center;">Admin Dashboard</h2>
 
 
-<h1>Welcome Admin: <%= session.getAttribute("username") %></h1>
+<form method="POST" action="ComplaintsDashBoardServlet">
+    <label for="complaintId">Complaints-id</label>
+    <input type="text" id="complaintId" name="complaintId"  readonly>
+
+    <label for="status">Status</label>
+    <input type="text" id="status" name="status" value="Pending" readonly>
+
+    <label for="description">Description</label>
+    <input type="text" id="description" name="description" required>
+
+    <input type="hidden" id="remark" name="remark" value="Not updated" required>
+    <input type="hidden" id="creatAt" name="creatAt" required>
+
+    <input type="hidden" id="updateId" name="updateId">
+    <input type="hidden" id="deleteId" name="deleteId">
+
+    <button type="submit" name="action" value="save">Save</button>
+    <button type="submit" name="action" value="update">Update</button>
+    <button type="submit" name="action" value="delete">Delete</button>
+</form>
+
+
+<br>
+
+<table border="1" cellpadding="5" cellspacing="0">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Description</th>
+        <th>Status</th>
+        <th>Remarks</th>
+        <th>Created At</th>
+    </tr>
+    </thead>
 
 </body>
 </html>
