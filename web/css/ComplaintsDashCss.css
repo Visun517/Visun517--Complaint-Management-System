@@ -1,95 +1,141 @@
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+/* Reset and Base Styles */
+* {
     margin: 0;
-    padding: 20px;
-}
-h2 {
-    text-align: center;
-    color: #333;
-    margin-bottom: 20px;
-}
-form {
-    width: 80%;
-    margin: 0 auto 20px;
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-    color: #555;
-}
-input[type="text"] {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
+    padding: 0;
     box-sizing: border-box;
 }
-input[readonly] {
-    background-color: #f9f9f9;
-    color: #888;
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    background: #f8fafc;
+    color: #2d3748;
+    line-height: 1.6;
 }
-button {
-    padding: 10px 15px;
-    margin-right: 10px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    background-color: #007bff;
+
+/* Header Styles */
+.dashboard-header {
+    background: linear-gradient(135deg, #0d6efd 0%, #6610f2 100%);
     color: white;
-    font-size: 14px;
-}
-button:hover {
-    background-color: #0056b3;
-}
-button[type="button"] {
-    background-color: #dc3545;
-}
-button[type="button"]:hover {
-    background-color: #c82333;
-}
-table {
-    width: 80%;
-    border-collapse: collapse;
-    margin: 20px auto;
-    background-color: #fff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-th, td {
-    padding: 12px;
-    text-align: left;
-    border: 1px solid #ddd;
-}
-th {
-    background-color: #007bff;
-    color: white;
-}
-tr:nth-child(even) {
-    background-color: #f8f9fa;
-}
-tr:hover {
-    background-color: #e9ecef;
-}
-td[colspan="4"] {
+    padding: 2rem 0;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
     text-align: center;
-    color: #888;
-    padding: 20px;
 }
-table {
-    width: 80%;
+
+.dashboard-header h1 {
+    font-size: 2.5rem;
+    font-weight: bold;
+}
+
+.main-content {
+    padding: 2rem 1rem;
+    max-width: 1000px;
+    margin: auto;
+}
+
+.form-section {
+    background: white;
+    padding: 2rem;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    margin-bottom: 2rem;
+}
+
+.form-section h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-group label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 0.75rem;
+    border-radius: 8px;
+    border: 2px solid #e2e8f0;
+    font-size: 1rem;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #0d6efd;
+    box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.1);
+}
+
+/* Buttons */
+.btn {
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    margin-right: 1rem;
+}
+
+.btn-save {
+    background: #0d6efd;
+    color: white;
+}
+
+.btn-update {
+    background: #ffc107;
+    color: white;
+}
+
+.btn-delete {
+    background: #dc3545;
+    color: white;
+}
+
+.btn:hover {
+    opacity: 0.9;
+}
+
+/* Table Section */
+.table-section {
+    background: white;
+    padding: 2rem;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.table-section h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.complaints-table {
+    width: 100%;
     border-collapse: collapse;
-    margin: 20px auto;
 }
-table, th, td {
-    border: 1px solid black;
-}
-th, td {
-    padding: 10px;
+
+.complaints-table th, .complaints-table td {
+    padding: 1rem;
+    border: 1px solid #e2e8f0;
     text-align: left;
+}
+
+.complaints-table th {
+    background: #f7fafc;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+}
+
+.complaints-table tr:hover {
+    background: #f1f5f9;
+}
+
+@media (max-width: 768px) {
+    .form-group input,
+    .btn {
+        width: 100%;
+        margin-bottom: 1rem;
+    }
 }

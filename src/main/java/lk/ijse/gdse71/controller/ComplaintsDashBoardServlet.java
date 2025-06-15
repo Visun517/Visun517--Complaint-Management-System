@@ -13,7 +13,6 @@ import lk.ijse.gdse71.model.dao.ComplainsDao;
 import javax.sql.DataSource;
 import java.io.IOException;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -166,6 +165,15 @@ public class ComplaintsDashBoardServlet extends HttpServlet {
                 req.getRequestDispatcher("/view/Notification.jsp").forward(req, resp);
                 throw new RuntimeException(e);
             }
+
+        } else if (req.getParameter("action").equals("logout")) {
+            System.out.println("logout");
+            System.out.println("logout");
+            HttpSession session = req.getSession(false);
+            if (session != null) {
+                session.invalidate();
+            }
+            resp.sendRedirect(req.getContextPath() + "/view/LogIn.jsp");
 
         }
     }

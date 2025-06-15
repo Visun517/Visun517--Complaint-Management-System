@@ -55,6 +55,9 @@ public class AdminDashServlet extends HttpServlet {
             req.getRequestDispatcher("/view/AdminDash.jsp").forward(req, resp);
 
         } catch (SQLException e) {
+            req.setAttribute("errorMessage", "Internal server error!");
+            req.setAttribute("redirectTo", "/view/LogIn.jsp");
+            req.getRequestDispatcher("/view/Notification.jsp").forward(req, resp);
             throw new RuntimeException(e);
         }
 
@@ -110,6 +113,15 @@ public class AdminDashServlet extends HttpServlet {
                 req.getRequestDispatcher("/view/Notification.jsp").forward(req, resp);
                 throw new RuntimeException(e);
             }
+        } else if (req.getParameter("action").equals("logout")) {
+            System.out.println("logout");
+            HttpSession session = req.getSession(false);
+            if (session != null) {
+                session.invalidate();
+            }
+
+            resp.sendRedirect(req.getContextPath() + "/view/LogIn.jsp");
+
         }
     }
 }
