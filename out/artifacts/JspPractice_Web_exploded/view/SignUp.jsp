@@ -10,7 +10,7 @@
 <div class="signup-container">
     <h2>Sign Up to CMS</h2>
 
-    <form method="POST" action="SignUpServlet">
+    <form method="POST" action="${pageContext.request.contextPath}/SignUpServlet">
         <div class="form-group">
             <label for="username">Username</label>
             <input type="text" class="form-control" id="username" name="username" required>

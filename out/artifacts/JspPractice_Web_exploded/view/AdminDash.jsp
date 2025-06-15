@@ -19,6 +19,14 @@
     List<Complains> complaintsList = (List<Complains>) request.getAttribute("complainsList");
 
     if (complaintsList != null && !complaintsList.isEmpty()) {
+        Complains lastComplaint = complaintsList.get(complaintsList.size() - 1);
+        String lastId = lastComplaint.getComplainId();
+
+        String numberPart = lastId.substring(1);
+        int number = Integer.parseInt(numberPart);
+        number++;
+
+        nextId = "C" + String.format("%03d", number);
 
     }
 %>
@@ -29,7 +37,7 @@
 <form method="POST" action="AdminDashServlet">
 
     <label for="complain-id">Complain-id</label>
-    <input type="text" id="complain-id" name="complain-id">
+    <input type="text" id="complain-id" name="complain-id" value="<%= nextId %>">
 
     <label for="statusDropDown">Choose status</label>
     <select class="form-select" id="statusDropDown" name="status" required>

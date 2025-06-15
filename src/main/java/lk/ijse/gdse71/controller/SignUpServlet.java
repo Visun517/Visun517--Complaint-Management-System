@@ -43,11 +43,14 @@ public class SignUpServlet extends HttpServlet {
         try {
             int i = userDao.saveUser(user, dataSource);
             if (i>0){
-                resp.sendRedirect(contextPath + "/view/LogIn.jsp");
+                req.setAttribute("successMessage", "User registered successfully!");
+                req.setAttribute("redirectTo", "/view/LogIn.jsp");
+                req.getRequestDispatcher("/view/Notification.jsp").forward(req, resp);
             }
         } catch (SQLException e) {
-            req.setAttribute("error", "Invalid username, password, or role");
-            req.getRequestDispatcher(contextPath + "/view/LogIn.jsp").forward(req, resp);
+            req.setAttribute("errorMessage", "Internal server error!");
+            req.setAttribute("redirectTo", "/view/LogIn.jsp");
+            req.getRequestDispatcher("/view/Notification.jsp").forward(req, resp);
             throw new RuntimeException(e);
         }
 

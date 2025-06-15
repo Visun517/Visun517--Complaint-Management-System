@@ -72,7 +72,9 @@ public class ComplaintsDashBoardServlet extends HttpServlet {
             req.getRequestDispatcher("/view/ComplaintDash.jsp").forward(req, resp);
 
         } catch (Exception e) {
-            e.printStackTrace();
+            req.setAttribute("errorMessage", "Internal server error!");
+            req.setAttribute("redirectTo", "/view/LogIn.jsp");
+            req.getRequestDispatcher("/view/Notification.jsp").forward(req, resp);
             throw new RuntimeException(e);
         }
 
@@ -84,7 +86,6 @@ public class ComplaintsDashBoardServlet extends HttpServlet {
         String description = req.getParameter("description");
         String status = req.getParameter("status");
         String remark = req.getParameter("remark");
-        //String creatAt = req.getParameter("creatAt");
 
         ComplainsDao complainsDao = new ComplainsDao();
 
@@ -103,18 +104,20 @@ public class ComplaintsDashBoardServlet extends HttpServlet {
                     int i = complainsDao.updateComplains(complains, dataSource);
 
                     if (i > 0) {
-                        System.out.println("Update success");
-                        resp.sendRedirect("ComplaintsDashBoardServlet");
+                        req.setAttribute("successMessage", "Complain updated successfully!");
+                        req.setAttribute("redirectTo", "/ComplaintsDashBoardServlet");
+                        req.getRequestDispatcher("/view/Notification.jsp").forward(req, resp);
                     }
                 }else {
-                    System.out.println("You can't delete this complain");
-                    resp.sendRedirect("ComplaintsDashBoardServlet");
+                    req.setAttribute("infoMessage", "You can't update this resolved complain!");
+                    req.setAttribute("redirectTo", "/ComplaintsDashBoardServlet");
+                    req.getRequestDispatcher("/view/Notification.jsp").forward(req, resp);
                 }
 
-            } catch (SQLException e) {
-                e.printStackTrace();
-                throw new RuntimeException(e);
             } catch (Exception e) {
+                req.setAttribute("errorMessage", "Internal server error!");
+                req.setAttribute("redirectTo", "/view/LogIn.jsp");
+                req.getRequestDispatcher("/view/Notification.jsp").forward(req, resp);
                 throw new RuntimeException(e);
             }
 
@@ -126,16 +129,19 @@ public class ComplaintsDashBoardServlet extends HttpServlet {
                     int i = complainsDao.deleteComplains(id, dataSource);
 
                     if (i > 0) {
-                        System.out.println("Delete success");
-                        resp.sendRedirect("ComplaintsDashBoardServlet");
+                        req.setAttribute("successMessage", "Complain deleted successfully!");
+                        req.setAttribute("redirectTo", "/ComplaintsDashBoardServlet");
+                        req.getRequestDispatcher("/view/Notification.jsp").forward(req, resp);
                     }
                 }else {
-                    System.out.println("You can't delete this complain");
-                    resp.sendRedirect("ComplaintsDashBoardServlet");
+                    req.setAttribute("infoMessage", "You can't delete this resolved complain!");
+                    req.setAttribute("redirectTo", "/ComplaintsDashBoardServlet");
+                    req.getRequestDispatcher("/view/Notification.jsp").forward(req, resp);
                 }
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
             } catch (Exception e) {
+                req.setAttribute("errorMessage", "Internal server error!");
+                req.setAttribute("redirectTo", "/view/LogIn.jsp");
+                req.getRequestDispatcher("/view/Notification.jsp").forward(req, resp);
                 throw new RuntimeException(e);
             }
 
@@ -150,10 +156,14 @@ public class ComplaintsDashBoardServlet extends HttpServlet {
             try {
                 int i = complainsDao.saveComplains(complains, dataSource);
                 if (i > 0) {
-                    System.out.println("Save success");
-                    resp.sendRedirect("ComplaintsDashBoardServlet");
+                    req.setAttribute("successMessage", "Complain saved successfully!");
+                    req.setAttribute("redirectTo", "/ComplaintsDashBoardServlet");
+                    req.getRequestDispatcher("/view/Notification.jsp").forward(req, resp);
                 }
             } catch (Exception e) {
+                req.setAttribute("errorMessage", "Internal server error!");
+                req.setAttribute("redirectTo", "/view/LogIn.jsp");
+                req.getRequestDispatcher("/view/Notification.jsp").forward(req, resp);
                 throw new RuntimeException(e);
             }
 
@@ -164,10 +174,15 @@ public class ComplaintsDashBoardServlet extends HttpServlet {
         ComplainsDao complainsDao = new ComplainsDao();
         ResultSet resolved = complainsDao.isResolved(id, dataSource);
 
-        if (resolved.next()) {
-            return !resolved.getString("status").equals("Resolved");
+        String status = null;
+        while (resolved.next()) {
+            status = resolved.getString("status");
+        }
+
+        if (status.equals("Resolved")) {
+            return true;
         } else {
-            throw new Exception("No complaint found with the given ID: " + id);
+            return false;
         }
     }
 
