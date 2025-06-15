@@ -1,4 +1,4 @@
-package lk.ijse.gdse71.model.dao;
+package lk.ijse.gdse71.dao;
 
 import lk.ijse.gdse71.model.User;
 

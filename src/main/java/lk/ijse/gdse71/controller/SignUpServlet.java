@@ -7,7 +7,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lk.ijse.gdse71.model.User;
-import lk.ijse.gdse71.model.dao.UserDao;
+import lk.ijse.gdse71.dao.UserDao;
 
 import javax.sql.DataSource;
 import java.io.IOException;
