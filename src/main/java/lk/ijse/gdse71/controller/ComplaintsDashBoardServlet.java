@@ -114,6 +114,7 @@ public class ComplaintsDashBoardServlet extends HttpServlet {
                 }
 
             } catch (Exception e) {
+                e.printStackTrace();
                 req.setAttribute("errorMessage", "Internal server error!");
                 req.setAttribute("redirectTo", "/view/LogIn.jsp");
                 req.getRequestDispatcher("/view/Notification.jsp").forward(req, resp);

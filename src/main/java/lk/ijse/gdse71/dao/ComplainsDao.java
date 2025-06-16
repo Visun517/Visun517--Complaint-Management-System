@@ -44,7 +44,7 @@ public class ComplainsDao {
         PreparedStatement preparedStatement = connection.prepareStatement("UPDATE complaints SET user_id = ?, description = ?,status  = ?, remarks = ? WHERE id = ?;  ");
         preparedStatement.setString(1, complains.getUserId());
         preparedStatement.setString(2, complains.getDescription());
-        preparedStatement.setString(3, complains.getStatus());
+        preparedStatement.setString(3, complains.getStatus().trim());
         preparedStatement.setString(4, complains.getRemarks());
         preparedStatement.setString(5, complains.getComplainId());
         int i = preparedStatement.executeUpdate();
