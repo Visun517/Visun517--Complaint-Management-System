@@ -72,7 +72,7 @@ public class ComplaintsDashBoardServlet extends HttpServlet {
 
         } catch (Exception e) {
             req.setAttribute("errorMessage", "Internal server error!");
-            req.setAttribute("redirectTo", "/view/LogIn.jsp");
+            req.setAttribute("redirectTo", "/view/ComplaintDash.jsp");
             req.getRequestDispatcher("/view/Notification.jsp").forward(req, resp);
             throw new RuntimeException(e);
         }
@@ -114,15 +114,13 @@ public class ComplaintsDashBoardServlet extends HttpServlet {
                 }
 
             } catch (Exception e) {
-                e.printStackTrace();
                 req.setAttribute("errorMessage", "Internal server error!");
-                req.setAttribute("redirectTo", "/view/LogIn.jsp");
+                req.setAttribute("redirectTo", "/view/ComplaintDash.jsp");
                 req.getRequestDispatcher("/view/Notification.jsp").forward(req, resp);
                 throw new RuntimeException(e);
             }
 
         } else if (req.getParameter("action").equals("delete")) {
-            System.out.println("delete");
 
             try {
                 if (!isResolved(id)) {
@@ -140,7 +138,7 @@ public class ComplaintsDashBoardServlet extends HttpServlet {
                 }
             } catch (Exception e) {
                 req.setAttribute("errorMessage", "Internal server error!");
-                req.setAttribute("redirectTo", "/view/LogIn.jsp");
+                req.setAttribute("redirectTo", "/view/ComplaintDash.jsp");
                 req.getRequestDispatcher("/view/Notification.jsp").forward(req, resp);
                 throw new RuntimeException(e);
             }
@@ -162,14 +160,12 @@ public class ComplaintsDashBoardServlet extends HttpServlet {
                 }
             } catch (Exception e) {
                 req.setAttribute("errorMessage", "Internal server error!");
-                req.setAttribute("redirectTo", "/view/LogIn.jsp");
+                req.setAttribute("redirectTo", "/view/ComplaintDash.jsp");
                 req.getRequestDispatcher("/view/Notification.jsp").forward(req, resp);
                 throw new RuntimeException(e);
             }
 
         } else if (req.getParameter("action").equals("logout")) {
-            System.out.println("logout");
-            System.out.println("logout");
             HttpSession session = req.getSession(false);
             if (session != null) {
                 session.invalidate();
